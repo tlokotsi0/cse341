@@ -4,11 +4,7 @@ const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
 const getOne = async (req, res) => {
-  console.log('--- Debugging getOne ---');
-  console.log('Full Params:', req.params);
-  console.log('Value of ID:', req.params.id);
-
-
+  
   try {
     const userId = new ObjectId(req.params.id.trim()); 
     const result = await mongodb
