@@ -12,7 +12,7 @@ mongodb.initDb((err) => {
   if (err) {
     console.log(err);
   } else {
-    app.listen(process.env.port || port);
+    app.listen(process.env.PORT || port);
     console.log('Web Server is listening at port '+(process.env.port || port));
   }
 });
