@@ -20,8 +20,6 @@ routes.post('/contacts', contactsController.createUser);
 
 routes.put('/contacts/:id', contactsController.updateUser);
 
-routes.delete('/contacts/:id', contactsController.deleteUser);
-
-
+routes.delete('/contacts/:userId', contactsController.deleteUser);
 
 module.exports = routes;
