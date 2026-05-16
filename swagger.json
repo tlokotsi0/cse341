@@ -5,10 +5,10 @@
     "description": "An API for storing, retrieving, updating, and deleting contact information.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341week1.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/api-docs": {
