@@ -1,6 +1,4 @@
 const mongodb = require('../db/connect');
-//const express = require ('express');
-//const app = express();
 const ObjectId = require('mongodb').ObjectId;
 
 const getOne = async (req, res) => {
@@ -31,8 +29,58 @@ const getAll = async (req, res) => {
   });
 };
 
+const createUser = async (req, res) => {
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday 
+  };
+  const response = await mongodb.getDb().db('Project1').collection('users').insertOne(user);
+  if(response.acknowledged) {
+    res.status(201).json({ id: response.insertedId });
+  } else {
+    res.status(500).json(response.error || 'An error occured when uploading the user.');
+  }
+};
+
+const updateUser = async (req, res) => {
+  const userId = new ObjectId(req.params.id);
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday 
+  };
+  const response = await mongodb.getDb().db('Project1').collection('users').replaceOne({_id: userId}, user);
+  if(response.modifiedCount > 0) {
+    res.status(204).send();
+  } else {
+    res.status(500).json(response.error || 'An error occured while updating the user.');
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const userId = new ObjectId(req.params.id);
+    const response = await mongodb.getDb().db().collection('contacts').deleteOne({ _id: userId });
+    
+    if (response.deletedCount > 0) {
+      res.status(204).send(); 
+    } else {
+      res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 module.exports = {
     getAll,
-    getOne
+    getOne,
+    createUser,
+    updateUser,
+    deleteUser
 };

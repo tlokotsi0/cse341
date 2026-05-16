@@ -1,8 +1,10 @@
 const express = require ('express');
 const app = express();
+const bodyParser = require('body-parser')
 const mongodb = require('./db/connect');
 const port = 3000;
 
+app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 
 // Connect to DB then start the server
