@@ -63,18 +63,14 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  try {
-    const userId = new ObjectId(req.params.id);
-    const response = await mongodb.getDb().db('Project1').collection('users').deleteOne({ _id: userId });
-    
-    if (response.deletedCount > 0) {
-      res.status(204).send(); 
-    } else {
-      res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
-    }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  const userId = new ObjectId(req.params.id);
+  const response = await mongodb.getDb().db('Project1').collection('users').remove({ _id: userId }, true);
+  if (response.deletedCount > 0) {
+    res.status(204).send(); 
+  } else {
+    res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
   }
+  
 };
 
 module.exports = {
